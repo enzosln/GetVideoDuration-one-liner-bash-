@@ -1,0 +1,1 @@
+find . -maxdepth 1 -type f -exec file {} \; | grep -i 'video' | awk -F: '{print $1}' | xargs -I {} sh -c 'echo -n "{} : " && ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "{}" 2>/dev/null | awk -F. "{printf \"%d:%02d\\n\",int(\$1/60),(\$1%60)}"'
